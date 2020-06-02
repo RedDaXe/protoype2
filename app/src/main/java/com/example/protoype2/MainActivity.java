@@ -72,10 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 dummy.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ID = workerID.getText().toString();
-                        rssi = Integer.parseInt(rssiValue.getText().toString());
 
-                        FirebaseManager FM = new FirebaseManager(ID, rssi);
                         setContentView(R.layout.activity_missing_list);
                     }
                 });
