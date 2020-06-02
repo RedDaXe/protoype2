@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button scanBtn, dummy;
+    Button scanBtn, dummy, addDummy;
     EditText workerID, rssiValue;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> employee = new HashMap<>();
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_ENABLE_BT = 1;
     private String ID;
     private int rssi;
+    DataHandler dh = new DataHandler();
 
 
 
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         scanBtn = findViewById(R.id.scanBtn);
         dummy = findViewById(R.id.dummy);
+        addDummy = findViewById(R.id.addDummy);
         workerID = findViewById(R.id.workerID);
         rssiValue = findViewById(R.id.rssiValue);
 
@@ -66,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
                 dummyForm.setVisibility(View.VISIBLE);
                 scanBtn.setVisibility(View.GONE);
 
+            }
+        });
+
+        addDummy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ID = String.valueOf(workerID.getText());
+                rssi = Integer.parseInt(String.valueOf(rssiValue.getText()));
+                dh.AddDummy(ID, rssi);
             }
         });
 
