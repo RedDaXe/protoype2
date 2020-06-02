@@ -22,7 +22,7 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<CategoryItem, Empl
     protected void onBindViewHolder(@NonNull EmployeeHolder employeeHolder, int i, @NonNull CategoryItem categoryItem) {
 
         employeeHolder.name.setText(categoryItem.getName());
-        employeeHolder.distance.setText(categoryItem.getDistance());
+        employeeHolder.distance.setText(String.valueOf(categoryItem.getDistance()));
 
     }
 
