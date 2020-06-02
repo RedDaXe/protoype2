@@ -60,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         final ConstraintLayout dummyForm = findViewById(R.id.dummyForm);
 
-
-                scanBtn.setOnClickListener(new View.OnClickListener() {
+        scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dummyForm.setVisibility(View.VISIBLE);
@@ -69,13 +68,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-                dummy.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                        setContentView(R.layout.activity_missing_list);
-                    }
-                });
+        dummy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent j = new Intent(MainActivity.this, MissingList.class);
+                startActivity(j);
+            }
+        });
 
 
     }
