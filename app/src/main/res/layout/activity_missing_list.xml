@@ -53,7 +53,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/alive"
+            android:id="@+id/aliveCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -67,7 +67,7 @@
             android:background="@drawable/box"/>
 
         <Button
-            android:id="@+id/dead"
+            android:id="@+id/deadCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

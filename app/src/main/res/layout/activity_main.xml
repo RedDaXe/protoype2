@@ -32,6 +32,7 @@
             android:layout_marginTop="8dp"
             android:autofillHints=""
             android:ems="10"
+            android:hint="Enter RSSI Value"
             android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -44,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:ems="10"
+            android:hint="Enter Worker Name"
             android:inputType="textPersonName"
-            android:text="Worker ID"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Button"
+            android:text="Add Dummy"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/rssiValue"
             app:layout_constraintTop_toBottomOf="@+id/rssiValue" />

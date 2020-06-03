@@ -1,10 +1,11 @@
 package com.example.protoype2;
 
+import android.app.Dialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,14 +47,16 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
 
     class EmployeeHolder extends RecyclerView.ViewHolder {
 
-        TextView name, distance;
+        TextView name, distance, aliveReport, deadReport;
         LinearLayout root;
         ImageView alive, dead;
+        Button doneBtn;
         public String employeeID;
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
         private CollectionReference employeeRef = db.collection("employees");
-        MissingList count;
-        int deadC = 0, aliveC = 0, i;
+        MissingList ml;
+        private int aliveC = 0, deadC = 0;
+
 
         public EmployeeHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,22 +67,17 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
             dead = itemView.findViewById(R.id.dead);
 
 
+
+            final Dialog dialog = new Dialog(itemView.getContext());
+
+
             alive.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     aliveC++;
-                    //count.alive.setText(aliveC);
+                    //ml.AliveCount();
                     employeeRef.document(employeeID).delete();
-                    employeeRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                            if(task.getResult().size()>0){
-                                Log.d(String.valueOf(this), "empty");
-                            }
-
-                        }
-                    });
 
                 }
             });
@@ -88,18 +86,32 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
                 @Override
                 public void onClick(View v) {
                     deadC++;
-                    //count.dead.setText(deadC);
-                    employeeRef.document(employeeID).delete();
-                    employeeRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    //ml.DeadCount();
 
-                            if(task.getResult().size()>0){
-                                Log.d(String.valueOf(this), "empty");
+
+                }
+            });
+            employeeRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                    if(task.getResult().size()==0){
+                        Log.d(String.valueOf(this), "empty");
+                        dialog.setContentView(R.layout.dialog_box);
+                        aliveReport = dialog.findViewById(R.id.aliveReport);
+                        deadReport = dialog.findViewById(R.id.deadReport);
+                        aliveReport.setText(Integer.toString(aliveC));
+                        deadReport.setText(Integer.toString(deadC));
+                        doneBtn = dialog.findViewById(R.id.doneBtn);
+                        doneBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
                             }
+                        });
+                        dialog.show();
+                    }
 
-                        }
-                    });
                 }
             });
         }
