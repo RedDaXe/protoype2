@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button scanBtn, dummy, addDummy;
     EditText workerID, rssiValue;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Map<String, Object> employee = new HashMap<>();
-    private BluetoothAdapter BA;
+    public BluetoothAdapter BA = BluetoothAdapter.getDefaultAdapter();
     private static final String TAG = "MainActivity";
     public static final int REQUEST_ENABLE_BT = 1;
     private String ID;
@@ -54,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
         scanBtn = findViewById(R.id.scanBtn);
         dummy = findViewById(R.id.dummy);
         addDummy = findViewById(R.id.addDummy);
@@ -66,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         scanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!BA.isEnabled()){
+                    Intent s = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(s, REQUEST_ENABLE_BT);
+                }
+
                 dummyForm.setVisibility(View.VISIBLE);
                 scanBtn.setVisibility(View.GONE);
 

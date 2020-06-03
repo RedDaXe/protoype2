@@ -35,8 +35,8 @@ public class MissingList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_missing_list);
-        aliveCount = findViewById(R.id.aliveCount);
-        deadCount = findViewById(R.id.deadCount);
+//        aliveCount = findViewById(R.id.aliveCount);
+//        deadCount = findViewById(R.id.deadCount);
 
         setUpRecyclerview();
 
@@ -55,6 +55,7 @@ public class MissingList extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        //recyclerView.getAdapter().getItemCount();
     }
 
     public void ChangeActivity(){
@@ -62,6 +63,13 @@ public class MissingList extends AppCompatActivity {
         startActivity(f);
     }
 
+    public void CountDead(int i){
+        //deadCount.setText(Integer.toString(i));
+    }
+
+    public void CountAlive(int i){
+        //aliveCount.setText(Integer.toString(i));
+    }
 
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.protoype2;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.ContentView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.net.ContentHandler;
 
 public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, EmployeeAdapter.EmployeeHolder>{
 
@@ -50,11 +54,11 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
         TextView name, distance, aliveReport, deadReport;
         LinearLayout root;
         ImageView alive, dead;
-        Button doneBtn;
+        Button doneBtn, aliveCount,deadCount;
         public String employeeID;
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
         private CollectionReference employeeRef = db.collection("employees");
-        MissingList ml;
+        MissingList ml = new MissingList();
         private int aliveC = 0, deadC = 0;
 
 
@@ -65,6 +69,8 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
             distance = itemView.findViewById(R.id.distance);
             alive = itemView.findViewById(R.id.alive);
             dead = itemView.findViewById(R.id.dead);
+//            deadCount = itemView.findViewById(R.id.deadCount);
+//            aliveCount = itemView.findViewById(R.id.aliveCount);
 
 
 
@@ -75,9 +81,8 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
                 @Override
                 public void onClick(View v) {
                     aliveC++;
-                    //ml.AliveCount();
+                    //ml.CountAlive(aliveC);
                     employeeRef.document(employeeID).delete();
-
 
                 }
             });
@@ -86,7 +91,8 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
                 @Override
                 public void onClick(View v) {
                     deadC++;
-                    //ml.DeadCount();
+                    //ml.CountDead(deadC);
+                    employeeRef.document(employeeID).delete();
 
 
                 }
@@ -107,6 +113,7 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
                             @Override
                             public void onClick(View v) {
                                 dialog.dismiss();
+                                ml.ChangeActivity();
                             }
                         });
                         dialog.show();
