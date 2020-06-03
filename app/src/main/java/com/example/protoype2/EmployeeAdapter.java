@@ -1,5 +1,6 @@
 package com.example.protoype2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, EmployeeAdapter.EmployeeHolder>{
 
@@ -48,6 +52,8 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
         public String employeeID;
         private FirebaseFirestore db = FirebaseFirestore.getInstance();
         private CollectionReference employeeRef = db.collection("employees");
+        MissingList count;
+        int deadC = 0, aliveC = 0, i;
 
         public EmployeeHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,17 +63,43 @@ public class EmployeeAdapter extends FirestoreRecyclerAdapter<Employees, Employe
             alive = itemView.findViewById(R.id.alive);
             dead = itemView.findViewById(R.id.dead);
 
+
             alive.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    aliveC++;
+                    //count.alive.setText(aliveC);
                     employeeRef.document(employeeID).delete();
+                    employeeRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                            if(task.getResult().size()>0){
+                                Log.d(String.valueOf(this), "empty");
+                            }
+
+                        }
+                    });
+
                 }
             });
 
             dead.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    deadC++;
+                    //count.dead.setText(deadC);
                     employeeRef.document(employeeID).delete();
+                    employeeRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                            if(task.getResult().size()>0){
+                                Log.d(String.valueOf(this), "empty");
+                            }
+
+                        }
+                    });
                 }
             });
         }

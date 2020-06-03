@@ -1,6 +1,7 @@
 package com.example.protoype2;
 
 import android.os.Bundle;
+import android.widget.Button;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.CollectionReference;
@@ -15,13 +16,20 @@ public class MissingList extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference employeeRef = db.collection("employees");
+    public Button alive, dead;
 
     private EmployeeAdapter adapter;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_missing_list);
+        alive = findViewById(R.id.alive);
+        dead = findViewById(R.id.dead);
+
 
         setUpRecyclerview();
     }
