@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,23 +25,20 @@ public class MissingList extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference employeeRef = db.collection("employees");
-    public Button aliveCount, deadCount;
-    MainActivity ma;
-
-
+    public static int aliveC, deadC;
+    public static Button aliveCount;
+    public static Button deadCount;
     private EmployeeAdapter adapter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_missing_list);
-//        aliveCount = findViewById(R.id.aliveCount);
-//        deadCount = findViewById(R.id.deadCount);
-
+        aliveCount = findViewById(R.id.aliveCount);
+        deadCount = findViewById(R.id.deadCount);
+        aliveC = 0;
+        deadC = 0;
         setUpRecyclerview();
-
     }
 
     private void setUpRecyclerview() {
@@ -70,7 +69,6 @@ public class MissingList extends AppCompatActivity {
     public void CountAlive(int i){
         //aliveCount.setText(Integer.toString(i));
     }
-
 
     @Override
     protected void onStart() {
