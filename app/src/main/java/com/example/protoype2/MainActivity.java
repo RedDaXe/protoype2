@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button scanBtn, dummy, addDummy;
+    Button scanBtn, dummy, addDummy, historyBtn;
     EditText workerID, rssiValue;
     public BluetoothAdapter BA = BluetoothAdapter.getDefaultAdapter();
     private static final String TAG = "MainActivity";
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         scanBtn = findViewById(R.id.scanBtn);
         dummy = findViewById(R.id.dummy);
         addDummy = findViewById(R.id.addDummy);
+        historyBtn = findViewById(R.id.historyBtn);
         workerID = findViewById(R.id.workerID);
         rssiValue = findViewById(R.id.rssiValue);
 
@@ -70,9 +71,18 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(s, REQUEST_ENABLE_BT);
                 }
 
-                dummyForm.setVisibility(View.VISIBLE);
                 scanBtn.setVisibility(View.GONE);
+                historyBtn.setVisibility(View.GONE);
+                dummyForm.setVisibility(View.VISIBLE);
 
+            }
+        });
+
+        historyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent g = new Intent(MainActivity.this, ReportActivity.class);
+                startActivity(g);
             }
         });
 

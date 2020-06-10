@@ -21,6 +21,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MissingList extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -29,6 +34,9 @@ public class MissingList extends AppCompatActivity {
     public static Button aliveCount;
     public static Button deadCount;
     private EmployeeAdapter adapter;
+    Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat;
+    DataHandler dh = new DataHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,9 @@ public class MissingList extends AppCompatActivity {
         deadCount = findViewById(R.id.deadCount);
         aliveC = 0;
         deadC = 0;
+//        dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+
         setUpRecyclerview();
     }
 
@@ -58,6 +69,9 @@ public class MissingList extends AppCompatActivity {
     }
 
     public void ChangeActivity(){
+        Date date = calendar.getTime();
+        String formattedDate = DateFormat.getDateInstance().format(date);
+        dh.AddHistory(Integer.parseInt(aliveCount.getText().toString()), Integer.parseInt(deadCount.getText().toString()), formattedDate);
         Intent f = new Intent(MissingList.this, MainActivity.class);
         startActivity(f);
     }

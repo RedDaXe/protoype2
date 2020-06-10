@@ -12,20 +12,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.internal.$Gson$Preconditions;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class DataHandler {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private float distance;
     Map<String, Object> employee = new HashMap<>();
+    Map<String, Object> history = new HashMap<>();
 
     public void AddDummy (String name, int rssi){
 
-        distance = CalculateDistance(rssi);
         employee.put("name", name);
-        employee.put("distance", distance);
+        employee.put("distance", rssi);
         db.collection("employees")
                 .add(employee)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -44,9 +44,33 @@ public class DataHandler {
                 });
     }
 
-    private float CalculateDistance(int rssi) {
-        BigDecimal d;
-        d = new BigDecimal(Math.round(Math.pow(10, (-23 - -rssi)/(10*7.187)))).setScale(4);
-        return d.floatValue();
+    public void AddHistory(int alive, int dead, String date){
+        history.put("alive", alive);
+        history.put("dead", dead);
+        history.put("date", date);
+        db.collection("history")
+                .add(history)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d("ReportActivity", "History Added " + documentReference.getId());
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("ReportActivity", "Error occured", e);
+
+                    }
+                });
+    }
+
+
+    public float CalculateDistance(int rssi) {
+        float f;
+        DecimalFormat df = new DecimalFormat("#.000");
+        f = (float)Math.pow(10.00, (-23.00 - -(float)rssi)/(10.00*7.1870));
+        return Float.valueOf(df.format(f));
     }
 }
