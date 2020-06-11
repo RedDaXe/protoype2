@@ -25,8 +25,8 @@ public class LogAdapter extends FirestoreRecyclerAdapter<Logs, LogAdapter.LogHol
     protected void onBindViewHolder(@NonNull LogHolder logHolder, final int i, @NonNull Logs logs) {
         logHolder.setLogID(getSnapshots().getSnapshot(i).getId());
         logHolder.dateLog.setText(logs.getDate());
-        logHolder.aliveLog.setText(logs.getAlive());
-        logHolder.deadLog.setText(logs.getDead());
+        logHolder.aliveLog.setText(Integer.toString(logs.getAlive()));
+        logHolder.deadLog.setText(Integer.toString(logs.getDead()));
 
     }
 
@@ -45,7 +45,8 @@ public class LogAdapter extends FirestoreRecyclerAdapter<Logs, LogAdapter.LogHol
         Button moreDetails;
         ConstraintLayout logDetails;
         LinearLayout listView;
-        public LogHolder(@NonNull View itemView) {
+
+        public LogHolder(@NonNull final View itemView) {
             super(itemView);
             aliveView = itemView.findViewById(R.id.textView7);
             deadView = itemView.findViewById(R.id.textView9);
@@ -55,7 +56,7 @@ public class LogAdapter extends FirestoreRecyclerAdapter<Logs, LogAdapter.LogHol
             undoBtn = itemView.findViewById(R.id.undoBtn);
             moreDetails = itemView.findViewById(R.id.moreDetails);
             logDetails = itemView.findViewById(R.id.logDetails);
-            listView = itemView.findViewById(R.id.listView);
+            listView = itemView.findViewById(R.id.list_root_log);
 
             moreDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,8 +69,8 @@ public class LogAdapter extends FirestoreRecyclerAdapter<Logs, LogAdapter.LogHol
             undoBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    undoBtn.setVisibility(View.GONE);
-                    logDetails.setVisibility(View.VISIBLE);
+                    moreDetails.setVisibility(View.VISIBLE);
+                    logDetails.setVisibility(View.GONE);
                 }
             });
         }
